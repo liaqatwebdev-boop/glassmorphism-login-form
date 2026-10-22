@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassmorphism Login Form</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #89216b 100%);
+      background-size: 200% 200%;
+      animation: gradientBG 12s ease infinite;
+      overflow: hidden;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Animated Dynamic Background Elements */
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Floating Abstract Spheres for Glass Reflection */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(10px);
+      z-index: 1;
+    }
+
+    .shape-1 {
+      width: 220px;
+      height: 220px;
+      background: linear-gradient(#1845ad, #23a2f6);
+      top: -60px;
+      left: -60px;
+      animation: floatShape 8s ease-in-out infinite alternate;
+    }
+
+    .shape-2 {
+      width: 260px;
+      height: 260px;
+      background: linear-gradient(to right, #ff512f, #dd2476);
+      bottom: -80px;
+      right: -60px;
+      animation: floatShape 10s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes floatShape {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(25px) rotate(15deg);
+      }
+    }
+
+    /* Main Glass Card Container */
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      z-index: 2;
+    }
+
+    .glass {
+      position: relative;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 28px;
+      padding: 45px 35px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass:hover {
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Avatar Circle */
+    .avatar-box {
+      width: 90px;
+      height: 90px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      margin: 0 auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    .avatar-box i {
+      font-size: 42px;
+      color: #ffffff;
+    }
+
+    /* Titles */
+    .glass h2 {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .glass p.subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    /* Form & Inputs */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .input-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-box i.input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 15px 48px 15px 48px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      outline: none;
+      font-size: 15px;
+      color: #ffffff;
+      font-weight: 400;
+      transition: all 0.3s ease;
+    }
+
+    .input-box input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .input-box input:focus {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Password Toggle Icon */
+    .toggle-password {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .toggle-password:hover {
+      color: #ffffff;
+    }
+
+    /* Forgot Password Link */
+    .options-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -8px;
+      margin-bottom: 5px;
+    }
+
+    .forgot-link {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+
+    .forgot-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Submit Button */
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+      border: none;
+      border-radius: 16px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 114, 255, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 114, 255, 0.6);
+      background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Signup Text */
+    p.signup {
+      margin-top: 25px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
+    }
+
+    p.signup a {
+      color: #ffffff;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 4px;
+      border-bottom: 1px transparent solid;
+      transition: border-color 0.3s ease;
+    }
+
+    p.signup a:hover {
+      border-color: #ffffff;
+    }
+
+    /* Notification / Message Alert Box */
+    .message-box {
+      display: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-bottom: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .message-box.success {
+      background: rgba(46, 213, 115, 0.25);
+      border: 1px solid rgba(46, 213, 115, 0.5);
+      color: #ffffff;
+    }
+
+    .message-box.error {
+      background: rgba(255, 71, 87, 0.25);
+      border: 1px solid rgba(255, 71, 87, 0.5);
+      color: #ffffff;
+    }
+
+    /* Responsive Design Adjustments */
+    @media (max-width: 480px) {
+      .glass {
+        padding: 35px 25px;
+        border-radius: 22px;
+      }
+
+      .avatar-box {
+        width: 75px;
+        height: 75px;
+      }
+
+      .avatar-box i {
+        font-size: 34px;
+      }
+
+      .glass h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Abstract Floating Background Shapes -->
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+
+  <!-- Main Login Card Container -->
+  <div class="login-container">
+    <div class="glass">
+
+      <!-- Avatar Icon Header -->
+      <div class="avatar-box">
+        <i class="fa-solid fa-user"></i>
+      </div>
+
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Login to your account</p>
+
+      <!-- Alert Notification Box -->
+      <div id="messageBox" class="message-box"></div>
+
+      <!-- Form Inputs -->
+      <form id="loginForm" onsubmit="handleLogin(event)">
+
+        <!-- Email Field -->
+        <div class="input-box">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input type="email" id="email" placeholder="Email" required autocomplete="email">
+        </div>
+
+        <!-- Password Field -->
+        <div class="input-box">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="password" placeholder="Password" required autocomplete="current-password">
+          <i class="fa-solid fa-eye toggle-password" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+        </div>
+
+        <!-- Options / Forgot Link -->
+        <div class="options-row">
+          <a href="#" class="forgot-link" onclick="handleForgotPassword(event)">Forgot Password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn" id="submitBtn">Login</button>
+      </form>
+
+      <!-- Signup Prompt -->
+      <p class="signup">
+        Don't have an account? <a href="#" onclick="handleSignup(event)">Sign Up</a>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Interaction Logic -->
+  <script>
+    // 1. Password Visibility Toggle Function
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.getElementById('togglePassword');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+      }
+    }
+
+    // 2. Notification Alert Box Display Handler
+    function showMessage(text, type) {
+      const msgBox = document.getElementById('messageBox');
+      msgBox.innerText = text;
+      msgBox.className = `message-box ${type}`;
+      msgBox.style.display = 'block';
+
+      setTimeout(() => {
+        msgBox.style.display = 'none';
+      }, 4000);
+    }
+
+    // 3. Form Submission Simulation Logic
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (!email || !password) {
+        showMessage('Please fill in all fields.', 'error');
+        return;
+      }
+
+      // Simulate loading state
+      submitBtn.innerText = 'Logging in...';
+      submitBtn.style.opacity = '0.8';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        submitBtn.innerText = 'Login';
+        submitBtn.style.opacity = '1';
+        submitBtn.disabled = false;
+
+        showMessage('Login successful! Welcome back.', 'success');
+      }, 1500);
+    }
+
+    // 4. Action Handlers for Forgot Password & Signup Links
+    function handleForgotPassword(e) {
+      e.preventDefault();
+      showMessage('Password reset link sent to your email.', 'success');
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      showMessage('Redirecting to Registration Page...', 'success');
+    }
+  </script>
+</body>
+
+</html>
